@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Extracted Portfolio Data</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      padding: 40px;
+      color: #333;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #2c3e50;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #1e3a8a;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 5px;
+      font-size: 22px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .info-pair {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .info-pair label {
+      font-weight: bold;
+      width: 140px;
+      margin-right: 10px;
+    }
+    .info-pair input,
+    .info-pair textarea {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    .info-pair textarea {
+      resize: vertical;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    ul li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    ul li input {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    .note-box {
+      margin-top: 40px;
+      background-color: #fff8db;
+      border-left: 5px solid #f1c40f;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .delete-btn {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+    .edit-button {
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+    }
+    .edit-button:hover {
+      background-color: #2980b9;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 2px solid #ccc;
+    }
+    .photo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    @media (max-width: 600px) {
+      .info-pair {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .info-pair label {
+        width: 100%;
+        margin-bottom: 6px;
+      }
+      ul li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      ul li input {
+        width: 100%;
+      }
+      .delete-btn {
+        margin: 8px 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧾 Review Your Extracted Portfolio Data</h1>
+
+    {% if data['photo_url'] %}
+    <div class="photo-container">
+      <img src="{{ data['photo_url'] }}" alt="Profile Photo" class="profile-pic">
+    </div>
+    {% endif %}
+
+    {% if data.resume_filename %}
+    <div class="section" style="text-align: center; margin-top: 10px;">
+      <a href="/uploads/{{ data.resume_filename }}" class="edit-button" download>
+        ⬇️ Download My Resume
+      </a>
+    </div>
+    {% endif %}
+
+    <form id="portfolioForm" action="/select-template" method="get">
+      <input type="hidden" name="photo_url" value="{{ data['photo_url'] }}">
+
+      <div class="section">
+        <h2>👤 Personal Information</h2>
+        <div class="info-pair">
+          <label>Name:</label>
+          <input type="text" name="name" value="{{ data['name'] }}">
+        </div>
+        <div class="info-pair">
+          <label>Title:</label>
+          <input type="text" name="title" value="{{ data['title'] }}">
+        </div>
+        <div class="info-pair">
+          <label>Summary:</label>
+          <textarea name="summary" rows="4">{{ data['summary'] }}</textarea>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>📞 Contact Information</h2>
+        <div class="info-pair">
+          <label>Email:</label>
+          <input type="email" name="email" value="{{ data['email'] }}">
+        </div>
+        <div class="info-pair">
+          <label>Phone:</label>
+          <input type="text" name="phone" value="{{ data['phone'] }}">
+        </div>
+        <div class="info-pair">
+          <label>LinkedIn:</label>
+          <input type="text" name="linkedin" value="{{ data['linkedin'] }}">
+        </div>
+        <div class="info-pair">
+          <label>GitHub:</label>
+          <input type="text" name="github" value="{{ data['github'] }}">
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🎓 Education</h2>
+        <ul id="education-list">
+          {% for edu in data['education'] %}
+          <li>
+            <input type="text" value="{{ edu }}">
+            <button type="button" class="delete-btn" onclick="this.parentElement.remove()">Delete</button>
+          </li>
+          {% endfor %}
+        </ul>
+        <button type="button" class="edit-button" onclick="addField('education-list')">+ Add Education</button>
+      </div>
+
+      <div class="section">
+        <h2>🛠️ Skills</h2>
+        <ul id="skills-list">
+          {% for skill in data['skills'] %}
+          <li>
+            <input type="text" value="{{ skill }}">
+            <button type="button" class="delete-btn" onclick="this.parentElement.remove()">Delete</button>
+          </li>
+          {% endfor %}
+        </ul>
+        <button type="button" class="edit-button" onclick="addField('skills-list')">+ Add Skill</button>
+      </div>
+
+      <div class="section">
+        <h2>💼 Projects</h2>
+        <ul id="projects-list">
+          {% for project in data['projects'] %}
+          <li>
+            <input type="text" value="{{ project }}">
+            <button type="button" class="delete-btn" onclick="this.parentElement.remove()">Delete</button>
+          </li>
+          {% endfor %}
+        </ul>
+        <button type="button" class="edit-button" onclick="addField('projects-list')">+ Add Project</button>
+      </div>
+
+      <div class="note-box">
+        <strong>📝 Important Note:</strong><br>
+        Resume parsing may not be fully accurate due to formatting differences in PDFs.<br><br>
+        ✅ Carefully review all fields, especially the <strong>Projects</strong> section.<br><br>
+        ✍️ Provide a clear and complete description of each project for the best portfolio display.
+      </div>
+
+      <button type="submit" class="edit-button">🚀 Generate Portfolio</button>
+    </form>
+  </div>
+
+  <script>
+  document.getElementById("portfolioForm").addEventListener("submit", function (e) {
+    const form = this;
+
+    // Remove old hidden fields
+    document.querySelectorAll("input[name='education'], input[name='skills'], input[name='projects']").forEach(el => el.remove());
+
+    // Add updated education
+    document.querySelectorAll("#education-list li input").forEach(input => {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "education";
+      hidden.value = input.value;
+      form.appendChild(hidden);
+    });
+
+    // Add updated skills
+    document.querySelectorAll("#skills-list li input").forEach(input => {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "skills";
+      hidden.value = input.value;
+      form.appendChild(hidden);
+    });
+
+    // Add updated projects
+    document.querySelectorAll("#projects-list li input").forEach(input => {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "projects";
+      hidden.value = input.value;
+      form.appendChild(hidden);
+    });
+  });
+
+  function addField(listId) {
+    const ul = document.getElementById(listId);
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <input type="text" value="">
+      <button type="button" class="delete-btn" onclick="this.parentElement.remove()">Delete</button>
+    `;
+
+    ul.appendChild(li);
+  }
+  </script>
+</body>
+</html>

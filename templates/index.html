@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrimePortfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 16px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #2563eb;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    nav {
+      display: flex;
+      gap: 32px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #4a5568;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #2563eb;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #2563eb;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hero-section {
+      padding: 120px 24px 100px;
+      text-align: center;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      margin-top: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      color: #1a202c;
+      margin-bottom: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.375rem;
+      color: #4a5568;
+      margin-bottom: 48px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: white;
+      text-decoration: none;
+      padding: 18px 36px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1.125rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+      border: none;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
+    }
+
+    .section {
+      padding: 100px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1a202c;
+      letter-spacing: -0.03em;
+    }
+
+    .section-subtitle {
+      font-size: 1.25rem;
+      color: #4a5568;
+      text-align: center;
+      margin-bottom: 80px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      border-color: #cbd5e0;
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 1.75rem;
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
+    }
+
+    .feature-title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1a202c;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-description {
+      color: #4a5568;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .about-section {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 28px;
+      padding: 80px 60px;
+      margin: 40px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .about-text {
+      font-size: 1.25rem;
+      color: #4a5568;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      padding: 60px 24px 40px;
+      margin-top: 100px;
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #60a5fa;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-description {
+      color: #94a3b8;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 400px;
+    }
+
+    .footer-section h4 {
+      color: white;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: #60a5fa;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .footer-contact-icon {
+      width: 20px;
+      height: 20px;
+      background: #334155;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .footer-bottom {
+      padding-top: 30px;
+      border-top: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copyright {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .footer-credits {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .footer-credits a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-credits a:hover {
+      color: #93c5fd;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 16px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+
+      nav {
+        gap: 20px;
+      }
+
+      nav a {
+        font-size: 0.9rem;
+      }
+
+      .hero-section {
+        padding: 100px 16px 80px;
+        margin-top: 64px;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+
+      .section {
+        padding: 80px 16px;
+      }
+
+      .section-title {
+        font-size: 2.25rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .feature-card {
+        padding: 32px 24px;
+      }
+
+      .about-section {
+        margin: 20px;
+        padding: 60px 32px;
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        display: none;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .cta-button {
+        padding: 16px 32px;
+        font-size: 1rem;
+      }
+
+      .about-section {
+        margin: 16px;
+        padding: 48px 24px;
+      }
+
+      .about-text {
+        font-size: 1.125rem;
+      }
+
+      footer {
+        padding: 50px 16px 30px;
+      }
+    }
+
+    /* Scroll animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feature-card {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .feature-card:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .feature-card:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .feature-card:nth-child(4) {
+      animation-delay: 0.45s;
+    }
+
+    /* Micro-interactions */
+    .cta-button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a href="#" class="logo">PrimePortfolio</a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Craft Your Perfect Portfolio Without Writing Code</h1>
+      <p class="hero-subtitle">PrimePortfolio helps students, developers, designers, and professionals launch clean, customizable websites with just a few clicks.</p>
+      <a href="/form" class="cta-button">
+        <span>🚀</span>
+        Start Building
+      </a>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <h2 class="section-title">Powerful Features</h2>
+    <p class="section-subtitle">Everything you need to create a stunning portfolio that showcases your work professionally</p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3 class="feature-title">Drag & Fill</h3>
+        <p class="feature-description">Input your data easily in a guided form — no technical skills needed.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3 class="feature-title">Professional Templates</h3>
+        <p class="feature-description">Select from modern, mobile-friendly templates with real-time previews.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3 class="feature-title">Resume Integration</h3>
+        <p class="feature-description">Auto-extract skills and projects from your resume and add a download link.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">⬇️</div>
+        <h3 class="feature-title">Easy Export</h3>
+        <p class="feature-description">Download the complete HTML file of your site and host it anywhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="about-section">
+      <div class="about-content">
+        <h2 class="section-title">About PrimePortfolio</h2>
+        <p class="about-text">PrimePortfolio is a powerful tool designed for students, job seekers, and professionals who want to make a strong first impression. Built with FastAPI and modern UI principles, it offers a seamless experience to build beautiful portfolios quickly and professionally.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <div class="footer-logo">PrimePortfolio</div>
+          <p class="footer-description">
+            Create stunning portfolios effortlessly. Built for professionals who value quality and simplicity.
+          </p>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="/form">Get Started</a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon">📧</div>
+            <span>vanshmunjal0007@gmail.com</span>
+          </div>
+          <div class="footer-contact-item">
+         
+            
+          </div>
+          <div class="footer-contact-item">
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          © 2025 PrimePortfolio. All rights reserved.
+        </div>
+        <div class="footer-credits">
+          Crafted by Vansh Munjal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

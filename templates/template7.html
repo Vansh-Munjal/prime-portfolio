@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ data.name }} | Cyber Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-cyan: #00ffff;
+      --neon-pink: #ff00ff;
+      --neon-green: #39ff14;
+      --neon-orange: #ff6600;
+      --dark-bg: #0a0a0a;
+      --darker-bg: #050505;
+      --card-bg: #111111;
+      --text-light: #e0e0e0;
+      --text-dark: #666666;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-light);
+      overflow-x: hidden;
+    }
+
+    /* Animated Grid Background */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridPulse 4s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Glowing Cursor Trail */
+    .cursor-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: all 0.1s ease;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(5, 5, 5, 0.95);
+      border-bottom: 1px solid var(--neon-cyan);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 15px 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+      animation: logoGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoGlow {
+      from { text-shadow: 0 0 10px var(--neon-cyan); }
+      to { text-shadow: 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan); }
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-menu a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .nav-menu a:hover {
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+      animation: pulseHero 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseHero {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    .hero-content {
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGlitch 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes textGlitch {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-2px); }
+      40% { transform: translateX(2px); }
+      60% { transform: translateX(-1px); }
+      80% { transform: translateX(1px); }
+      100% { transform: translateX(0); }
+    }
+
+    .hero .title {
+      font-size: 1.5rem;
+      color: var(--neon-green);
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px var(--neon-green);
+      animation: typewriter 3s steps(30) 1s both;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--neon-green);
+    }
+
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    .cyber-button {
+      display: inline-block;
+      padding: 15px 40px;
+      background: transparent;
+      border: 2px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      transition: all 0.3s ease;
+      clip-path: polygon(20px 0%, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
+    }
+
+    .cyber-button:hover {
+      background: var(--neon-cyan);
+      color: var(--darker-bg);
+      box-shadow: 0 0 20px var(--neon-cyan);
+      transform: scale(1.05);
+    }
+
+    /* Sections */
+    .section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 3rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 60px;
+      color: var(--neon-pink);
+      text-shadow: 0 0 20px var(--neon-pink);
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 100px;
+      height: 2px;
+      background: var(--neon-pink);
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px var(--neon-pink);
+    }
+
+      .download-btn {
+        display: inline-block;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        background-color: #007bff;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+        margin-top: 20px;
+      }
+
+      .download-btn i {
+        margin-right: 8px;
+      }
+
+      .download-btn:hover {
+        background-color: #0056b3;
+        color: #fff;
+        box-shadow: 0 6px 12px rgba(0, 86, 179, 0.3);
+      }
+
+
+    /* Hexagonal Cards */
+    .hex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .hex-card {
+      background: var(--card-bg);
+      border: 1px solid var(--neon-cyan);
+      padding: 30px;
+      position: relative;
+      transition: all 0.4s ease;
+      clip-path: polygon(30px 0%, 100% 0%, calc(100% - 30px) 100%, 0% 100%);
+      animation: slideInHex 0.8s ease both;
+    }
+
+    .hex-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+      border-color: var(--neon-pink);
+    }
+
+    .hex-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .hex-card:hover::before {
+      opacity: 1;
+    }
+
+    @keyframes slideInHex {
+      from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(20deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+      }
+    }
+
+    .hex-card h3 {
+      color: var(--neon-green);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+
+    /* Project Cards with Scan Line Effect */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--neon-orange);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      animation: matrixDrop 1s ease both;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--neon-orange);
+      box-shadow: 0 0 20px var(--neon-orange);
+      animation: scanLine 2s linear infinite;
+    }
+
+    @keyframes scanLine {
+      0% { top: -2px; }
+      100% { top: 100%; }
+    }
+
+    @keyframes matrixDrop {
+      from {
+        opacity: 0;
+        transform: translateY(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .project-card .content {
+      padding: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-card h3 {
+      color: var(--neon-orange);
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-shadow: 0 0 10px var(--neon-orange);
+      margin-bottom: 15px;
+    }
+
+    /* Terminal-style Timeline */
+    .terminal-timeline {
+      background: var(--darker-bg);
+      border: 1px solid var(--neon-green);
+      border-radius: 5px;
+      margin-top: 40px;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+    }
+
+    .terminal-header {
+      background: var(--neon-green);
+      color: var(--darker-bg);
+      padding: 10px 20px;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .terminal-body {
+      padding: 20px;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .terminal-line {
+      margin-bottom: 15px;
+      opacity: 0;
+      animation: terminalType 0.8s ease both;
+    }
+
+    .terminal-line::before {
+      content: '> ';
+      color: var(--neon-green);
+    }
+
+    @keyframes terminalType {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Contact Matrix */
+    .contact-matrix {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .contact-node {
+      background: var(--card-bg);
+      border: 2px solid transparent;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      animation: nodeActivate 1s ease both;
+    }
+
+    .contact-node::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+
+    .contact-node:hover::before {
+      opacity: 0.1;
+    }
+
+    .contact-node:hover {
+      border-color: var(--neon-cyan);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 255, 255, 0.4);
+    }
+
+    @keyframes nodeActivate {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .contact-node .icon {
+      font-size: 3rem;
+      color: var(--neon-pink);
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px var(--neon-pink);
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-node h3 {
+      color: var(--text-light);
+      font-weight: 700;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-node a {
+      color: var(--text-dark);
+      text-decoration: none;
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease;
+    }
+
+    .contact-node:hover a {
+      color: var(--neon-cyan);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-menu { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .section { padding: 60px 15px; }
+      .section-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="cursor-trail"></div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <div class="nav-logo">{{ data.name }}</div>
+      <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Data</a></li>
+        <li><a href="#contact">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      {% if data.photo_url %}
+      <img src="{{ data.photo_url }}" alt="Profile" style="width: 180px; height: 180px; border-radius: 50%; margin-bottom: 30px; border: 3px solid var(--neon-cyan); box-shadow: 0 0 30px var(--neon-cyan), inset 0 0 20px rgba(0, 255, 255, 0.1); animation: logoGlow 2s ease-in-out infinite alternate;">
+      {% endif %}
+      <h1>{{ data.name }}</h1>
+      <div class="title">{{ data.title }}</div>
+      <p style="color: var(--text-dark); margin-bottom: 40px; font-size: 1.2rem;">{{ data.summary }}</p>
+      <a href="#contact" class="cyber-button">INITIALIZE</a>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="section">
+    <h2 class="section-title">SKILLS.EXE</h2>
+    <div class="hex-grid">
+      {% for skill in data.skills %}
+      <div class="hex-card">
+        <h3>{{ skill }}</h3>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <h2 class="section-title">PROJECTS.DIR</h2>
+    <div class="project-grid">
+      {% for project in data.projects %}
+      <div class="project-card">
+        <div class="content">
+          <h3>{{ project }}</h3>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education" class="section">
+    <h2 class="section-title">EDUCATION.LOG</h2>
+    <div class="terminal-timeline">
+      <div class="terminal-header">SYSTEM_EDUCATION.LOG</div>
+      <div class="terminal-body">
+        {% for edu in data.education %}
+        <div class="terminal-line">{{ edu }}</div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <h2 class="section-title">CONTACT.NET</h2>
+    <div class="contact-matrix">
+      <div class="contact-node">
+        <div class="icon">📧</div>
+        <h3>EMAIL</h3>
+        <a href="mailto:{{ data.email }}">{{ data.email }}</a>
+      </div>
+      <div class="contact-node">
+        <div class="icon">📱</div>
+        <h3>PHONE</h3>
+        <a href="tel:{{ data.phone }}">{{ data.phone }}</a>
+      </div>
+      {% if data.linkedin %}
+      <div class="contact-node">
+        <div class="icon">💼</div>
+        <h3>LINKEDIN</h3>
+        <a href="{{ data.linkedin }}" target="_blank">CONNECT</a>
+      </div>
+      {% endif %}
+      {% if data.github %}
+      <div class="contact-node">
+        <div class="icon">⚡</div>
+        <h3>GITHUB</h3>
+        <a href="{{ data.github }}" target="_blank">REPOSITORY</a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {% if data.html_filename %}
+  <a href="/download-html/{{ data.html_filename }}" class="btn download-btn">
+    <i class="bi bi-file-earmark-code"></i> Download Portfolio HTML
+  </a>
+  {% endif %}
+
+  <script>
+    // Cursor trail effect
+    const cursor = document.querySelector('.cursor-trail');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX - 10 + 'px';
+      cursor.style.top = e.clientY - 10 + 'px';
+    });
+
+    // Stagger animations
+    const cards = document.querySelectorAll('.hex-card, .project-card, .contact-node');
+    cards.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    const terminalLines = document.querySelectorAll('.terminal-line');
+    terminalLines.forEach((line, index) => {
+      line.style.animationDelay = `${index * 0.3}s`;
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Random glitch effect on hero title
+    setInterval(() => {
+      const title = document.querySelector('.hero h1');
+      title.style.animation = 'none';
+      setTimeout(() => {
+        title.style.animation = 'textGlitch 0.5s ease-in-out infinite alternate';
+      }, 100);
+    }, 5000);
+  </script>
+</body>
+</html>

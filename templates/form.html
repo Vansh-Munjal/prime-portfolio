@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrimePortfolio - Create Your Professional Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --accent-blue: #3b82f6;
+      --accent-dark: #1e293b;
+      --success-green: #059669;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-card: #ffffff;
+      --border-light: #e2e8f0;
+      --border-focus: #3b82f6;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-secondary);
+      min-height: 100vh;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      background: var(--bg-card);
+      margin: 0 auto;
+      border-radius: 16px;
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-light);
+    }
+
+    .header {
+      background: var(--primary-gradient);
+      padding: 50px 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      color: rgba(255,255,255,0.95);
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .form-container {
+      padding: 60px;
+    }
+
+    .form-section {
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--secondary-gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .form-grid.two-col {
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .form-grid.three-col {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+    }
+
+    .form-label.required::after {
+      content: ' *';
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .input-container {
+      position: relative;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 16px 18px;
+      border: 2px solid var(--border-light);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      font-weight: 400;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: inherit;
+      line-height: 1.6;
+    }
+
+    .file-upload {
+      position: relative;
+      display: block;
+      cursor: pointer;
+      background: var(--bg-secondary);
+      border: 2px dashed var(--border-light);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload:hover {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.02);
+    }
+
+    .file-upload.drag-over {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.05);
+      transform: scale(1.01);
+    }
+
+    .file-upload input[type="file"] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      font-size: 2.5rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .upload-text {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .upload-subtext {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .file-name {
+      margin-top: 12px;
+      padding: 10px 16px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 25px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: inline-block;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-note {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 400;
+    }
+
+    .note-icon {
+      color: var(--accent-blue);
+      font-size: 16px;
+    }
+
+    .submit-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 2px solid var(--border-light);
+    }
+
+    .submit-button {
+      padding: 18px 48px;
+      background: var(--secondary-gradient);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      min-width: 280px;
+      letter-spacing: -0.01em;
+    }
+
+    .submit-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .submit-button:hover::before {
+      left: 100%;
+    }
+
+    .submit-button:active {
+      transform: translateY(0);
+    }
+
+    .loading {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      margin: auto;
+      border: 2px solid transparent;
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--secondary-gradient);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 1024px) {
+      .container {
+        max-width: 900px;
+      }
+
+      .form-container {
+        padding: 40px;
+      }
+
+      .form-grid.three-col {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px;
+        border-radius: 12px;
+      }
+
+      .header {
+        padding: 40px 30px;
+      }
+
+      .logo {
+        font-size: 2.2rem;
+      }
+
+      .form-container {
+        padding: 30px 25px;
+      }
+
+      .form-grid.two-col,
+      .form-grid.three-col {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 10px;
+      }
+
+      .form-container {
+        padding: 25px 20px;
+      }
+
+      .submit-button {
+        font-size: 1rem;
+        padding: 16px 32px;
+        min-width: 240px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <h1 class="logo">PrimePortfolio</h1>
+        <p class="tagline">Create Your Professional Portfolio</p>
+        <p class="subtitle">Build a stunning portfolio in minutes with AI-powered resume analysis and professional templates</p>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <form action="/submit" method="POST" enctype="multipart/form-data" id="portfolioForm">
+        
+        <!-- Personal Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <span class="section-icon">👤</span>
+            Personal Information
+          </h3>
+          <div class="form-grid two-col">
+            <div class="form-group">
+              <label for="name" class="form-label required">Full Name</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="title" class="form-label required">Professional Title</label>
+              <input type="text" id="title" name="title" class="form-input" placeholder="Full Stack Developer" required>
+            </div>
+          </div>
+          <div class="form-grid" style="margin-top: 30px;">
+            <div class="form-group">
+              <label for="summary" class="form-label">Professional Summary</label>
+              <textarea id="summary" name="summary" class="form-textarea" placeholder="Write a compelling summary that highlights your expertise, key achievements, and career objectives..."></textarea>
+              <div class="form-note">
+                <span class="note-icon">💡</span>
+                This will appear prominently on your portfolio homepage and should showcase your unique value proposition
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <span class="section-icon">📞</span>
+            Contact Information
+          </h3>
+          <div class="form-grid three-col">
+            <div class="form-group">
+              <label for="email" class="form-label required">Email Address</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 12345 67890">
+            </div>
+            <div class="form-group">
+              <label for="location" class="form-label">Location</label>
+              <input type="text" id="location" name="location" class="form-input" placeholder="City, Country">
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Profiles Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <span class="section-icon">🔗</span>
+            Professional Profiles
+          </h3>
+          <div class="form-grid two-col">
+            <div class="form-group">
+              <label for="linkedin" class="form-label">LinkedIn Profile</label>
+              <input type="url" id="linkedin" name="linkedin" class="form-input" placeholder="https://linkedin.com/in/yourname">
+            </div>
+            <div class="form-group">
+              <label for="github" class="form-label">GitHub Profile</label>
+              <input type="url" id="github" name="github" class="form-input" placeholder="https://github.com/yourusername">
+            </div>
+          </div>
+        </div>
+
+        <!-- File Uploads Section -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <span class="section-icon">📄</span>
+            Documents & Media
+          </h3>
+          <div class="form-grid two-col">
+            <div class="form-group">
+              <label for="resume" class="form-label required">Resume (PDF)</label>
+              <label for="resume" class="file-upload" id="resumeUpload">
+                <input type="file" id="resume" name="resume" accept=".pdf" required>
+                <span class="upload-icon">📄</span>
+                <div class="upload-text">Click to upload your resume</div>
+                <div class="upload-subtext">PDF format only, max 10MB</div>
+              </label>
+              <div class="form-note">
+                <span class="note-icon">🤖</span>
+                We'll automatically extract your skills, projects, and education using advanced AI technology
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="photo" class="form-label">Profile Photo</label>
+              <label for="photo" class="file-upload" id="photoUpload">
+                <input type="file" id="photo" name="photo" accept=".jpg,.jpeg,.png">
+                <span class="upload-icon">📸</span>
+                <div class="upload-text">Upload your professional photo</div>
+                <div class="upload-subtext">JPG, PNG format, max 5MB</div>
+              </label>
+              <div class="form-note">
+                <span class="note-icon">✨</span>
+                A professional headshot will significantly enhance your portfolio's impact
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-container">
+          <button type="submit" class="submit-button" id="submitBtn">
+            <span id="buttonText">Generate My Portfolio</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Progress bar animation
+    function updateProgressBar(progress) {
+      const progressBar = document.getElementById('progressBar');
+      progressBar.style.transform = `scaleX(${progress / 100})`;
+    }
+
+    // File upload handlers
+    function setupFileUpload(inputId, uploadId) {
+      const input = document.getElementById(inputId);
+      const upload = document.getElementById(uploadId);
+      
+      function handleFileSelection(file) {
+        if (!file) return;
+        
+        // Validate file type
+        const acceptedTypes = input.accept.split(',').map(type => type.trim());
+        const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+        const isValidType = acceptedTypes.some(type => 
+          type === fileExtension || 
+          file.type.startsWith(type.replace('*', ''))
+        );
+        
+        if (!isValidType) {
+          alert(`Please select a valid file type: ${input.accept}`);
+          return;
+        }
+        
+        // Validate file size (10MB for resume, 5MB for photo)
+        const maxSize = inputId === 'resume' ? 10 * 1024 * 1024 : 5 * 1024 * 1024;
+        if (file.size > maxSize) {
+          const maxSizeMB = maxSize / (1024 * 1024);
+          alert(`File size must be less than ${maxSizeMB}MB`);
+          return;
+        }
+        
+        const fileName = document.createElement('div');
+        fileName.className = 'file-name';
+        fileName.textContent = `✓ ${file.name}`;
+        
+        // Remove existing file name if present
+        const existingFileName = upload.querySelector('.file-name');
+        if (existingFileName) {
+          existingFileName.remove();
+        }
+        
+        upload.appendChild(fileName);
+        upload.style.borderColor = 'var(--success-green)';
+        upload.style.background = 'rgba(5, 150, 105, 0.05)';
+        
+        // Update progress
+        updateFormProgress();
+      }
+      
+      input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          handleFileSelection(file);
+        }
+      });
+
+      // Drag and drop functionality
+      upload.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        upload.classList.add('drag-over');
+      });
+
+      upload.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Only remove drag-over if we're actually leaving the upload area
+        if (!upload.contains(e.relatedTarget)) {
+          upload.classList.remove('drag-over');
+        }
+      });
+
+      upload.addEventListener('drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        upload.classList.remove('drag-over');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          const file = files[0];
+          
+          // Create a new FileList-like object
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          input.files = dataTransfer.files;
+          
+          handleFileSelection(file);
+        }
+      });
+      
+      // Prevent default drag behaviors on the document
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        upload.addEventListener(eventName, function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+      });
+    }
+
+    // Initialize file uploads
+    setupFileUpload('resume', 'resumeUpload');
+    setupFileUpload('photo', 'photoUpload');
+
+    // Form submission with loading state
+    document.getElementById('portfolioForm').addEventListener('submit', function(e) {
+      const submitBtn = document.getElementById('submitBtn');
+      const buttonText = document.getElementById('buttonText');
+      
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      buttonText.textContent = 'Processing...';
+      
+      // Simulate progress
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress > 90) progress = 90;
+        updateProgressBar(progress);
+      }, 200);
+      
+      // Complete progress on form submission
+      setTimeout(() => {
+        clearInterval(progressInterval);
+        updateProgressBar(100);
+      }, 2000);
+    });
+
+    // Form validation with visual feedback
+    const inputs = document.querySelectorAll('.form-input, .form-textarea');
+    inputs.forEach(input => {
+      input.addEventListener('blur', function() {
+        if (this.hasAttribute('required') && !this.value.trim()) {
+          this.style.borderColor = '#dc2626';
+          this.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+        } else if (this.value.trim()) {
+          this.style.borderColor = 'var(--success-green)';
+          this.style.boxShadow = '0 0 0 3px rgba(5, 150, 105, 0.1)';
+        }
+      });
+
+      input.addEventListener('focus', function() {
+        this.style.borderColor = 'var(--border-focus)';
+        this.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+      });
+    });
+
+    // Auto-resize textarea
+    const textarea = document.getElementById('summary');
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
+
+    // Form progress tracking
+    let completedFields = 0;
+    const totalFields = document.querySelectorAll('[required]').length;
+
+    function updateFormProgress() {
+      const requiredFields = document.querySelectorAll('[required]');
+      completedFields = 0;
+      
+      requiredFields.forEach(field => {
+        if ((field.type === 'file' && field.files.length > 0) || 
+            (field.type !== 'file' && field.value.trim())) {
+          completedFields++;
+        }
+      });
+      
+      const progress = (completedFields / totalFields) * 100;
+      updateProgressBar(progress * 0.3); // Show partial progress as user fills form
+    }
+
+    // Update progress on field changes
+    inputs.forEach(input => {
+      input.addEventListener('input', updateFormProgress);
+    });
+
+    document.getElementById('resume').addEventListener('change', updateFormProgress);
+    document.getElementById('photo').addEventListener('change', updateFormProgress);
+
+    // Initialize progress
+    updateFormProgress();
+  </script>
+</body>
+</html>

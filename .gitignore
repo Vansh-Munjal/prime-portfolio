@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+env/
+venv/
+
+# VSCode
+.vscode/
+
+# Mac system files
+.DS_Store
+
+# Byte-compiled / cache
+*.py[cod]
+*$py.class
+
+# Local test files or debug folders
+downloads/
+
+# Others
+*.log
+*.sqlite3
+*.db
