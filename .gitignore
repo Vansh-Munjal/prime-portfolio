@@ -25,3 +25,4 @@ downloads/
 *.log
 *.sqlite3
 *.db
+.vercel

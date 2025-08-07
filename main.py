@@ -184,3 +184,8 @@ async def download_html(filename: str):
         return FileResponse(file_path, media_type="text/html", filename="MyPortfolio.html")
     else:
         raise HTTPException(status_code=404, detail="Portfolio HTML not found")
+    
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
