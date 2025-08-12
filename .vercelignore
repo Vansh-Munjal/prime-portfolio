@@ -1,9 +1,0 @@
-*.mp4
-*.pdf
-*.zip
-*.csv
-venv/
-__pycache__/
-downloads/
-data/
-.env
