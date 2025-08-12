@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ data.name }} | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #007bff;
+      --secondary-dark: #343a40;
+      --light-gray: #f8f9fa;
+      --dark-gray: #6c757d;
+      --white: #ffffff;
+      --black: #000000;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --border-color: #e9ecef;
+      --font-body: 'Montserrat', sans-serif;
+      --font-heading: 'Poppins', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--light-gray);
+      color: var(--secondary-dark);
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* Header & Navigation */
+    .header {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px var(--shadow);
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--secondary-dark);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .logo:hover {
+      color: var(--primary-blue);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--secondary-dark);
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      display: block;
+      margin-top: 5px;
+      right: 0;
+      background: var(--primary-blue);
+      transition: width 0.4s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-blue);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+      left: 0;
+      background: var(--primary-blue);
+    }
+
+    /* Main Content Sections */
+    .section {
+      padding: 8rem 0 4rem 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--secondary-dark);
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background-color: var(--primary-blue);
+      border-radius: 2px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--dark-gray);
+      font-size: 1.1rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 10rem;
+      padding-bottom: 6rem;
+      background-color: var(--white);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 6px solid var(--border-color);
+      box-shadow: 0 8px 20px var(--shadow);
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-photo:hover {
+      transform: scale(1.05);
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--secondary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--dark-gray);
+      margin-bottom: 2rem;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto 2.5rem auto;
+      color: var(--dark-gray);
+      font-size: 1.1rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .social-link {
+      color: var(--secondary-dark);
+      font-size: 1.8rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-link:hover {
+      color: var(--primary-blue);
+      transform: translateY(-5px);
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.8rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-family: var(--font-heading);
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-blue);
+      color: var(--white);
+      border: 2px solid var(--primary-blue);
+    }
+    
+    .btn-primary:hover {
+      background-color: transparent;
+      color: var(--primary-blue);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--secondary-dark);
+      border: 2px solid var(--secondary-dark);
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+      color: var(--white);
+    }
+
+    /* Skills Section */
+    .skills-section {
+      background-color: var(--light-gray);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-card {
+      background-color: var(--white);
+      border-radius: 10px;
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 4px 15px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .skill-icon {
+      font-size: 3rem;
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+    }
+    
+    .skill-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .skill-card p {
+      color: var(--dark-gray);
+    }
+
+    /* Projects Section */
+    .projects-section {
+      background-color: var(--white);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background-color: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 200px;
+      background-color: var(--secondary-dark);
+      color: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 4rem;
+      font-family: var(--font-heading);
+    }
+
+    .project-content {
+      padding: 2rem;
+    }
+    
+    .project-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-content p {
+      color: var(--dark-gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-links a {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .project-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Education Section */
+    .education-section {
+      background-color: var(--light-gray);
+    }
+
+    .education-item {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .education-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 50px;
+      bottom: -15px;
+      width: 2px;
+      background-color: var(--border-color);
+    }
+
+    .education-icon {
+      font-size: 1.5rem;
+      color: var(--primary-blue);
+      background-color: var(--white);
+      padding: 0.8rem;
+      border-radius: 50%;
+      border: 2px solid var(--primary-blue);
+      box-shadow: 0 0 10px var(--shadow);
+      z-index: 10;
+    }
+
+    .education-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .education-content p {
+      color: var(--dark-gray);
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background-color: var(--secondary-dark);
+      color: var(--white);
+    }
+
+    .contact-section .section-title,
+    .contact-section .section-subtitle {
+      color: var(--white);
+    }
+    
+    .contact-section .section-title::after {
+      background-color: var(--primary-blue);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background-color: var(--secondary-dark);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .contact-item:hover {
+      transform: translateX(10px);
+      border-color: var(--primary-blue);
+    }
+
+    .contact-icon {
+      font-size: 2rem;
+      color: var(--primary-blue);
+    }
+    
+    .contact-item p {
+      margin: 0;
+    }
+
+    .contact-item a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .contact-item a:hover {
+      color: var(--primary-blue);
+    }
+    
+    .download-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+  margin-top: 20px;
+  margin-left: 80px;
+}
+
+.download-btn i {
+  margin-right: 8px;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+  color: #fff;
+  box-shadow: 0 6px 12px rgba(0, 86, 179, 0.3);
+}
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero h2 {
+        font-size: 1.2rem;
+      }
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="nav-container">
+      <a href="#" class="logo">{{ data.name }}</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#about" class="active">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="hero">
+      <div class="container hero-content">
+        {% if data.photo_url %}
+        <img src="{{ data.photo_url }}" alt="{{ data.name }}" class="profile-photo">
+        {% else %}
+        <div class="profile-photo" style="background-color: var(--primary-blue); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 4rem;">{{ data.name.0 }}</div>
+        {% endif %}
+        <h1>{{ data.name }}</h1>
+        <h2>{{ data.title }}</h2>
+        <p>{{ data.summary }}</p>
+        
+        <div class="social-links">
+          {% if data.linkedin %}
+          <a href="{{ data.linkedin }}" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>
+          {% endif %}
+          {% if data.github %}
+          <a href="{{ data.github }}" target="_blank" class="social-link"><i class="bi bi-github"></i></a>
+          {% endif %}
+        </div>
+        
+        <div class="cta-buttons">
+          <a href="#contact" class="btn btn-primary">Hire Me</a>
+          <a href="#projects" class="btn btn-secondary">View Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section skills-section">
+      <div class="container">
+        <h2 class="section-title">My Skills</h2>
+        <p class="section-subtitle">A list of my technical and professional expertise.</p>
+        <div class="skills-grid">
+          {% for skill in data.skills %}
+          <div class="skill-card">
+            <i class="bi bi-code-slash skill-icon"></i>
+            <h3>{{ skill }}</h3>
+            <p>Expert-level proficiency with proven track record in delivering exceptional results and innovative solutions.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section projects-section">
+      <div class="container">
+        <h2 class="section-title">My Projects</h2>
+        <p class="section-subtitle">Highlights of my most significant and recent work.</p>
+        <div class="projects-grid">
+          {% for project in data.projects %}
+          <div class="project-card">
+            <div class="project-image">P{{ loop.index }}</div>
+            <div class="project-content">
+              <h3>{{ project }}</h3>
+              <p>Comprehensive solution showcasing modern development practices, user-centered design, and technical excellence.</p>
+              <div class="project-links">
+                <a href="#">View Details <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="section education-section">
+      <div class="container">
+        <h2 class="section-title">Education</h2>
+        <p class="section-subtitle">My academic background and professional certifications.</p>
+        <div class="education-timeline">
+          {% for edu in data.education %}
+          <div class="education-item">
+            <div class="education-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="education-content">
+              <h3>{{ edu }}</h3>
+              <p>Relevant coursework and academic achievements that shaped my professional journey.</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="bi bi-envelope-fill contact-icon"></i>
+            <p>Email: <a href="mailto:{{ data.email }}">{{ data.email }}</a></p>
+          </div>
+          <div class="contact-item">
+            <i class="bi bi-phone-fill contact-icon"></i>
+            <p>Phone: <a href="tel:{{ data.phone }}">{{ data.phone }}</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  
+  {% if data.html_filename %}
+  <a href="/download-html/{{ data.html_filename }}" class="btn download-btn">
+    <i class="bi bi-file-earmark-code"></i> Download Portfolio HTML
+  </a>
+  {% endif %}
+
+  <script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - document.querySelector('.header').offsetHeight,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for active navigation link
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: "-25% 0px -75% 0px",
+      threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === entry.target.id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+  </script>
+
+</body>
+</html>
